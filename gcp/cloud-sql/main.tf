@@ -11,6 +11,7 @@ resource "google_sql_database_instance" "this" {
   deletion_protection = var.deletion_protection
 
   settings {
+    edition           = var.edition # ENTERPRISE allows db-custom-* tiers (Tier A); ENTERPRISE_PLUS forces db-perf-optimized-*
     tier              = var.tier
     availability_type = var.availability_type # ZONAL (Tier A) | REGIONAL (HA)
     disk_size         = var.disk_size

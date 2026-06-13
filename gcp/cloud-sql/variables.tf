@@ -24,9 +24,15 @@ variable "database_version" {
   default     = "POSTGRES_16"
 }
 
+variable "edition" {
+  type        = string
+  description = "ENTERPRISE (allows cheap db-custom-* tiers) or ENTERPRISE_PLUS (db-perf-optimized-* only)."
+  default     = "ENTERPRISE"
+}
+
 variable "tier" {
   type        = string
-  description = "Machine tier (e.g. db-custom-1-3840)."
+  description = "Machine tier (e.g. db-custom-1-3840). Must be a db-custom-* tier when edition = ENTERPRISE."
   default     = "db-custom-1-3840"
 }
 
