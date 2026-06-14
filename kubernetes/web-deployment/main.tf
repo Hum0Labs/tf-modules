@@ -17,9 +17,10 @@ resource "kubernetes_secret_v1" "env" {
 
 resource "kubernetes_deployment_v1" "this" {
   metadata {
-    name      = var.name
-    namespace = var.namespace
-    labels    = local.labels
+    name        = var.name
+    namespace   = var.namespace
+    labels      = local.labels
+    annotations = var.deployment_annotations
   }
 
   spec {

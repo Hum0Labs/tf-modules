@@ -63,7 +63,13 @@ variable "init_containers" {
 
 variable "annotations" {
   type        = map(string)
-  description = "Pod template annotations (e.g. Keel triggers)."
+  description = "Pod template annotations."
+  default     = {}
+}
+
+variable "deployment_annotations" {
+  type        = map(string)
+  description = "Annotations on the Deployment's own metadata. Keel reads keel.sh/* policy here, not on the pod template."
   default     = {}
 }
 
