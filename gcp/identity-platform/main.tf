@@ -15,7 +15,21 @@ resource "google_identity_platform_config" "default" {
     }
   }
 
+  multi_tenant {
+    allow_tenants = true
+  }
+
   authorized_domains = var.authorized_domains
+}
+
+resource "google_identity_platform_tenant" "tenant" {
+  for_each = toset(var.tenants)
+
+  project               = var.project_id
+  display_name          = each.value
+  allow_password_signup = true
+
+  depends_on = [google_identity_platform_config.default]
 }
 
 resource "google_apikeys_key" "signin" {
