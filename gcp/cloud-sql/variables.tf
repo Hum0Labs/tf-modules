@@ -18,6 +18,27 @@ variable "private_network" {
   description = "VPC network ID for the private IP. Requires private-services-access on that VPC."
 }
 
+variable "ipv4_enabled" {
+  type        = bool
+  description = "Assign a public IP to the instance. Access is still gated by authorized_networks."
+  default     = false
+}
+
+variable "authorized_networks" {
+  type = list(object({
+    name  = string
+    value = string # CIDR, e.g. 203.0.113.4/32
+  }))
+  description = "Public-IP allowlist (only used when ipv4_enabled = true). Empty = no direct access."
+  default     = []
+}
+
+variable "ssl_mode" {
+  type        = string
+  description = "Cloud SQL SSL mode (e.g. ENCRYPTED_ONLY). null leaves the provider default."
+  default     = null
+}
+
 variable "database_version" {
   type        = string
   description = "Postgres version."

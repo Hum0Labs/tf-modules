@@ -18,9 +18,20 @@ resource "google_sql_database_instance" "this" {
     disk_autoresize   = var.disk_autoresize
 
     ip_configuration {
-      ipv4_enabled                                  = false
+      ipv4_enabled                                  = var.ipv4_enabled
       private_network                               = var.private_network
       enable_private_path_for_google_cloud_services = true
+      ssl_mode                                      = var.ssl_mode
+
+      # Public-IP allowlist. Only consulted when ipv4_enabled = true; empty list
+      # means no IP may connect directly (the private path is unaffected).
+      dynamic "authorized_networks" {
+        for_each = var.authorized_networks
+        content {
+          name  = authorized_networks.value.name
+          value = authorized_networks.value.value
+        }
+      }
     }
 
     backup_configuration {
